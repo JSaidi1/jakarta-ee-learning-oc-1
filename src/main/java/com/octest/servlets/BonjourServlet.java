@@ -6,6 +6,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+import com.octest.bdd.Nom;
+import com.octest.beans.Utilisateur;
+
 @WebServlet(name = "BonjourServlet", value = "/BonjourServlet")
 public class BonjourServlet extends HttpServlet {
 
@@ -15,26 +18,22 @@ public class BonjourServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("prenom")) {
-                    request.setAttribute("prenom", cookie.getValue());
-                }
-            }
-        }
+        Nom tableNoms = new Nom();
+        request.setAttribute("utilisateurs", tableNoms.recupererUtilisateurs());
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(request.getParameter("nom"));
+        utilisateur.setPrenom(request.getParameter("prenom"));
 
-        Cookie cookie = new Cookie("prenom", prenom);
-        cookie.setMaxAge(60 * 60 * 24 * 30);
-        response.addCookie(cookie);
+        Nom tableNoms = new Nom();
+        tableNoms.ajouterUtilisateur(utilisateur);
+
+        request.setAttribute("utilisateurs", tableNoms.recupererUtilisateurs());
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
     }
