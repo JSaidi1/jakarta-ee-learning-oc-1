@@ -18,11 +18,17 @@
         <url-pattern>/bonjour</url-pattern>
     </servlet-mapping>
 
-    <!--Tag ligs-->
+    <!-- Tag ligs -->
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
             <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
         </jsp-property-group>
     </jsp-config>
+
+    <!-- Session -->
+    <session-config>
+        <session-timeout>10</session-timeout> <!-- Timeout in minutes => After 30 minutes of inactivity, the session will expire.-->
+    </session-config>
 </web-app>

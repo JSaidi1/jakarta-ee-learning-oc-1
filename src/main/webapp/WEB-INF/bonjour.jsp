@@ -5,16 +5,17 @@
     <title>Test</title>
 </head>
 <body>
-    <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !"/></p>
+    <c:if test="${ !empty sessionScope.prenom && !empty sessionScope.nom }">
+        <p>Vous êtes ${ sessionScope.prenom } ${ sessionScope.nom } !</p>
     </c:if>
-    <form method="post" action="bonjour" enctype="multipart/form-data">
+    <form method="post" action="bonjour">
         <p>
-            <label for="description">Description du fichier : </label>
-            <input type="text" name="description" id="description"/>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom"/>
         </p>
         <p>
-            <label for="fichier">Fichier à envoyer : </label>
-            <input type="file" name="fichier" id="fichier"/>
+            <label for="prenom">Prénom : </label>
+            <input type="text" name="prenom" id="prenom"/>
         </p>
 
         <input type="submit"/>
